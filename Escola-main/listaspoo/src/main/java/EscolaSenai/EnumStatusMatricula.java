@@ -6,19 +6,19 @@ public enum EnumStatusMatricula {
     SUPENSO("Suspenso no Sistema"),
     TRANCADO("Trancado no Sistema"),
     AFASTADO("Afastado no Sistema"),
+    FERIAS("Em Período de Férias"),
     CONCLUIDO("Concluído no Sistema");
 
-    //ATRIBUTO
+    // ATRIBUTO
     private final String EnumStatMat;
-    
-    //CONSTRUTOR
-    EnumStatusMatricula(String EnumStatusMatPorExtenso){
+
+    // CONSTRUTOR
+    EnumStatusMatricula(String EnumStatusMatPorExtenso) {
         this.EnumStatMat = EnumStatusMatPorExtenso;
     }
-    
-    //GETTER
+
+    // GETTER
     public String getEnumStatMat() {
         return EnumStatMat;
     }
 }
-

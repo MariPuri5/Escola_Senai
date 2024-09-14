@@ -1,13 +1,76 @@
 package EscolaSenai;
 
+import java.time.LocalDate;
+import java.util.Scanner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class _Application {
+    public static int contadorTentativas = 3;
+    public static Pessoa usuarioLogado;
 
-	public static void main(String[] args) {
-		SpringApplication.run(_Application.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(_Application.class, args);
+
+        //Menu.menuInicial();
+        Professor p = new Professor("pDev");
+        p.setEmail("pdev@");
+        p.setSenhaNova("dev");
+        System.out.println(p.getEmail());
+        System.out.println(p.getSenha());
+        Pessoa.listaDeUsuarios.add(p);
+        Funcionario.listaDeFuncionariosDaEscola.add(p);
+        
+
+        Aluno a = new Aluno("aDev");
+        a.setEmail("adev@");
+        a.setSenhaNova("dev");
+        Pessoa.listaDeUsuarios.add(a);
+        Aluno.listaDeAlunos.add(a);
+        
+        
+    
+    while(contadorTentativas>0) {
+        // Login
+        // Pergunta login e senha
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" = Login = ");
+        System.out.print("Login:");
+        String loginDigitado = sc.nextLine();
+        System.out.print("Senha:");
+        String senhaDigitada = sc.nextLine();
+
+        if ( autorizaCredenciais(loginDigitado, senhaDigitada) ){ //ele vai no metodo
+            contadorTentativas=3;//contador reseta
+            usuarioLogado.login();//, se retornar true 
+        } else if (contadorTentativas > 1) {//, se retornar false
+            System.out.println(("Login ou Senha incorretos"));
+            contadorTentativas--;
+            System.out.println((contadorTentativas+ " tentativas restantes."));
+        } else {
+            System.out.println("Cadastro Bloqueado! Entre em contato com a Coordenação.");
+            contadorTentativas--;
+        }
+    }
+}        
+        public static boolean autorizaCredenciais(String loginDigitado, String senhaDigitada) {
+            // Verificação das credenciais digitadas
+            // Percorre a lista de professores
+            for (Pessoa pessoa : Pessoa.listaDeUsuarios) {// polimorfismo, busca aluno e professor
+                // tenho que pegar o login e senha do a e comparar com os dados digitados
+                if (pessoa.getSenha().equals(senhaDigitada) && pessoa.getEmail().equals(loginDigitado)) {
+                    System.out.println(("Login realizado com sucesso"));
+                    System.out.println(("joga para o menu profs"));
+                    usuarioLogado = pessoa;
+                    return true;
+                }
+            }
+            return false;
+        }                
+    }
+
 
         /*                 •---===ESCOLA SENAI===---•
          * Nós vamos começar a estruturar um projeto que é o EscolaSenai.
